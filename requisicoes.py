@@ -1,13 +1,20 @@
 import requests
+from bs4 import BeautifulSoup
 
-response = requests.get('https://cruzterrasanta.com.br/nossa-senhora-abadia/20/101/#google_vignette')
+response = requests.get('https://santo.cancaonova.com/santos/')
 
-print(response.status_code)
+content = response.content
 
-print('')
+site = BeautifulSoup(content, 'html.parser')
 
-print(response.headers)
+# print(site.prettify())  # prettify = indentação
 
-print('')
+li = site.find('a', attrs={'class': 'thumbnail thumbnail-left'})
+# print(li.prettify())
 
-print(response.content)
+
+sant_name = li.find('h3')
+# print(sant_name.text)
+
+sant_resume = li.find('p')
+print(sant_resume.text)
